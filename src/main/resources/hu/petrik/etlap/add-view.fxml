@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Spinner?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+
+<?import javafx.collections.FXCollections?>
+<?import java.lang.Integer?>
+<?import javafx.scene.control.Button?>
+<GridPane hgap="5.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+          prefHeight="120.0" prefWidth="450.0" vgap="5" xmlns="http://javafx.com/javafx/17"
+          xmlns:fx="http://javafx.com/fxml/1"
+          fx:controller="hu.petrik.etlap.controllers.AddController">
+    <columnConstraints>
+        <ColumnConstraints hgrow="SOMETIMES" minWidth="300.0" prefWidth="100.0"/>
+        <ColumnConstraints hgrow="SOMETIMES" minWidth="100.0" prefWidth="100.0"/>
+        <ColumnConstraints hgrow="SOMETIMES" minWidth="30.0" prefWidth="100.0"/>
+        <ColumnConstraints hgrow="SOMETIMES" minWidth="30.0" prefWidth="100.0"/>
+    </columnConstraints>
+    <rowConstraints>
+        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+    </rowConstraints>
+    <padding>
+        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
+    </padding>
+    <Label text="Név"/>
+    <Label text="Leírás" GridPane.columnIndex="1"/>
+    <Label text="Ár (Ft)" GridPane.columnIndex="2"/>
+    <Label text="Kategória" GridPane.columnIndex="3"/>
+    <TextField GridPane.rowIndex="1" fx:id="nevTextField" promptText="Az étel neve"/>
+    <TextField GridPane.columnIndex="1" GridPane.rowIndex="1" fx:id="leirasTextField" promptText="kövid leírás"/>
+    <Spinner GridPane.columnIndex="2" GridPane.rowIndex="1" fx:id="arSpinner" editable="true">
+        <valueFactory>
+            <javafx.scene.control.SpinnerValueFactory.IntegerSpinnerValueFactory initialValue="300" min="300"
+                                                                                 max="300000" amountToStepBy="100"/>
+        </valueFactory>
+    </Spinner>
+    <ChoiceBox prefWidth="150.0" GridPane.columnIndex="3" GridPane.rowIndex="1" fx:id="kategoriaChoiceBox">
+        <items>
+            <FXCollections fx:factory="observableArrayList">
+            </FXCollections>
+        </items>
+    </ChoiceBox>
+    <Button GridPane.columnIndex="0" GridPane.rowIndex="2" text="Hozzáadás" onAction="#onHozzadasButtonClick"/>
+</GridPane>

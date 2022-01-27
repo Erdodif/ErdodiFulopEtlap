@@ -10,7 +10,7 @@ public class Etel {
     private int ar;
     private Kategoria kategoria;
 
-    public Etel(int id, String nev, String leiras, int ar,Kategoria kategoria){
+    public Etel(int id, String nev, String leiras, int ar, Kategoria kategoria) {
         this.id = id;
         this.nev = nev;
         this.leiras = leiras;
@@ -18,7 +18,7 @@ public class Etel {
         this.kategoria = kategoria;
     }
 
-    public Etel(int id, String nev, String leiras, int ar,String kategoriaNev){
+    public Etel(int id, String nev, String leiras, int ar, String kategoriaNev) {
         this.id = id;
         this.nev = nev;
         this.leiras = leiras;
@@ -26,7 +26,7 @@ public class Etel {
         this.kategoria = Kategoria.fromNev(kategoriaNev);
     }
 
-    public Etel(int id, String nev, String leiras, int ar,int kategoriaId){
+    public Etel(int id, String nev, String leiras, int ar, int kategoriaId) {
         this.id = id;
         this.nev = nev;
         this.leiras = leiras;
@@ -52,6 +52,10 @@ public class Etel {
 
     public Kategoria getKategoria() {
         return kategoria;
+    }
+
+    public String getKategotiaNev() {
+        return kategoria.getNev();
     }
 
     public void setId(int id) {

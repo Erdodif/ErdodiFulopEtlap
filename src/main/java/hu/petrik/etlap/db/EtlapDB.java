@@ -25,7 +25,7 @@ public class EtlapDB {
                     result.getString("nev"),
                     result.getString("leiras"),
                     result.getInt("ar"),
-                    Kategoria.fromId(result.getInt("kategoria"))
+                    Kategoria.fromId(result.getInt("kategoria_id"))
             ));
         }
         return etelek;
@@ -42,7 +42,7 @@ public class EtlapDB {
     }
 
     public boolean deleteEtel(int id) throws SQLException {
-        String sql = "DELETE FROM `filmek` WHERE id = ?";
+        String sql = "DELETE FROM `etlap` WHERE id = ?";
         PreparedStatement prpstmt = conn.prepareStatement(sql);
         prpstmt.setInt(1, id);
         return prpstmt.executeUpdate() == 1;

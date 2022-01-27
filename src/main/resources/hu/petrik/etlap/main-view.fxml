@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox minHeight="300.0" minWidth="500.0" prefHeight="314.0" prefWidth="544.0" spacing="20.0"
+      xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="hu.petrik.etlap.controllers.MainController"
+>
+    <padding>
+        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
+    </padding>
+    <HBox maxHeight="50.0" prefHeight="25.0" prefWidth="600.0" spacing="10.0">
+        <Button mnemonicParsing="false" onAction="#onHozzaadasButtonClick" text="Hozzáadás"/>
+        <Button mnemonicParsing="false" onAction="#onModositasButtonClick" text="Módosítás"/>
+        <Button mnemonicParsing="false" onAction="#onTorlesButtonClick" text="Törlés"/>
+    </HBox>
+    <TableView fx:id="etelTable" maxHeight="1.7976931348623157E308" prefHeight="200.0" prefWidth="500.0" VBox.vgrow="ALWAYS">
+        <columns>
+            <TableColumn fx:id="colNev" minWidth="50.0" prefWidth="200.0" text="Név"/>
+            <TableColumn fx:id="colLeiras" minWidth="50.0" prefWidth="150.0" text="Leírás"/>
+            <TableColumn fx:id="colAr" minWidth="50.0" prefWidth="65.0" text="Ár"/>
+            <TableColumn fx:id="colKategoria" minWidth="50.0" prefWidth="70.0" text="Kategória"/>
+        </columns>
+    </TableView>
+</VBox>

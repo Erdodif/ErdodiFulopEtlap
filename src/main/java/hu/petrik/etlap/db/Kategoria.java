@@ -12,11 +12,11 @@ public class Kategoria {
     private int id;
     private String nev;
 
-    static void initialize(EtlapDB etlapDB) throws SQLException {
+    public static void initialize(EtlapDB etlapDB) throws SQLException {
         Connection conn = etlapDB.conn;
         kategoriak = new ArrayList<>();
         Statement stmt = conn.createStatement();
-        String sql = "SELECT * FROM etlap;";
+        String sql = "SELECT * FROM kategoria;";
         ResultSet result = stmt.executeQuery(sql);
         while (result.next()){
             kategoriak.add(new Kategoria(
@@ -41,7 +41,7 @@ public class Kategoria {
 
     @Override
     public String toString() {
-        return super.toString();
+        return this.getNev();
     }
 
     static public Kategoria fromId(int id){
