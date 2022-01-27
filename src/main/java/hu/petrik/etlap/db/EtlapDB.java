@@ -15,10 +15,30 @@ public class EtlapDB {
     }
 
     public List<Etel> getEtelek() throws SQLException {
-        List<Etel> etelek = new ArrayList<Etel>();
+        List<Etel> etelek = new ArrayList<>();
         Statement stmt = conn.createStatement();
         String sql = "SELECT * FROM etlap;";
         ResultSet result = stmt.executeQuery(sql);
+        while (result.next()) {
+            etelek.add(new Etel(
+                    result.getInt("id"),
+                    result.getString("nev"),
+                    result.getString("leiras"),
+                    result.getInt("ar"),
+                    Kategoria.fromId(result.getInt("kategoria_id"))
+            ));
+        }
+        return etelek;
+    }
+    public List<Etel> getEtelek(Kategoria filterKategoria) throws SQLException {
+        if (filterKategoria == Kategoria.EMPTY_CATEGORY){
+            return getEtelek();
+        }
+        List<Etel> etelek = new ArrayList<>();
+        String sql = "SELECT * FROM etlap WHERE `kategoria_id` = ?;";
+        PreparedStatement prpstm = this.conn.prepareCall(sql);
+        prpstm.setInt(1,filterKategoria.getId());
+        ResultSet result = prpstm.executeQuery();
         while (result.next()) {
             etelek.add(new Etel(
                     result.getInt("id"),
@@ -59,25 +79,15 @@ public class EtlapDB {
         return prpstm.executeUpdate() == 1;
     }
 
-    public boolean raisePrice(int modifier, Integer etelID, boolean szazalek) throws SQLException {
-        String whereIfSingle = etelID == null ? "WHERE id = ?" : "";
-        if(szazalek){
-            if (modifier < 5) {
-                throw new IllegalArgumentException("Áremelés nem lehet 5% alatt!");
-            }
-            if (modifier > 50){
-                throw new IllegalArgumentException("Áremelés nem lehet 50% felett!");
-            }
+    public boolean raisePrice(int modifier, Integer etelID) throws SQLException {
+        String whereIfSingle = etelID != null ? "WHERE id = ?" : "";
+        if (modifier < 5) {
+            throw new IllegalArgumentException("Áremelés nem lehet 5% alatt!");
         }
-        else{
-            if (modifier < 50) {
-                throw new IllegalArgumentException("Áremelés nem lehet 50Ft alatt!");
-            }
-            if (modifier > 3000) {
-                throw new IllegalArgumentException("Áremelés nem lehet 3000Ft felett!");
-            }
+        if (modifier > 3000) {
+            throw new IllegalArgumentException("Áremelés nem lehet 3000Ft felett!");
         }
-        String sql = "UPDATE `etlap` SET ar = ar * (1 + (100 / ?)) " + whereIfSingle + ";";
+        String sql = "UPDATE `etlap` SET ar = ar * (1 + (? / 100)) " + whereIfSingle + ";";
         if (modifier > 50) {
             sql = "UPDATE `etlap` SET ar = ar + ? " + whereIfSingle + ";";
         }

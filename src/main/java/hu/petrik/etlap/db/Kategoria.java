@@ -11,6 +11,7 @@ public class Kategoria {
     static private List<Kategoria> kategoriak;
     private int id;
     private String nev;
+    static public final Kategoria EMPTY_CATEGORY = new Kategoria(0,"Nincs szűrés");
 
     public static void initialize(EtlapDB etlapDB) throws SQLException {
         Connection conn = etlapDB.conn;
