@@ -3,6 +3,7 @@ package hu.petrik.etlap.db;
 import javafx.fxml.FXML;
 
 import java.sql.*;
+import java.time.chrono.IsoChronology;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.List;
@@ -30,14 +31,15 @@ public class EtlapDB {
         }
         return etelek;
     }
+
     public List<Etel> getEtelek(Kategoria filterKategoria) throws SQLException {
-        if (filterKategoria == Kategoria.EMPTY_CATEGORY){
+        if (filterKategoria == Kategoria.EMPTY_CATEGORY) {
             return getEtelek();
         }
         List<Etel> etelek = new ArrayList<>();
         String sql = "SELECT * FROM etlap WHERE `kategoria_id` = ?;";
         PreparedStatement prpstm = this.conn.prepareCall(sql);
-        prpstm.setInt(1,filterKategoria.getId());
+        prpstm.setInt(1, filterKategoria.getId());
         ResultSet result = prpstm.executeQuery();
         while (result.next()) {
             etelek.add(new Etel(
@@ -79,22 +81,33 @@ public class EtlapDB {
         return prpstm.executeUpdate() == 1;
     }
 
-    public boolean raisePrice(int modifier, Integer etelID) throws SQLException {
-        String whereIfSingle = etelID != null ? "WHERE id = ?" : "";
+    public boolean raisePrice(int modifier, Integer etelID, Kategoria filter_kategoria) throws SQLException {
+        boolean isID = etelID != null;
+        boolean isFilter = filter_kategoria != Kategoria.EMPTY_CATEGORY;
+        String whereIfAny = (isID || isFilter) ? "WHERE " : "";
+        String conditionIfSingle = isID ? "id = ? " : "";
+        String conditionIfFilter = isFilter ? "kategoria_id = ? " : "";
+        String colonIfBoth = (isID && isFilter) ? ", " : "";
         if (modifier < 5) {
             throw new IllegalArgumentException("Áremelés nem lehet 5% alatt!");
         }
         if (modifier > 3000) {
             throw new IllegalArgumentException("Áremelés nem lehet 3000Ft felett!");
         }
-        String sql = "UPDATE `etlap` SET ar = ar * (1 + (? / 100)) " + whereIfSingle + ";";
+        String sql = "UPDATE `etlap` SET ar = ar * (1 + (? / 100)) " + whereIfAny + conditionIfSingle + colonIfBoth + conditionIfFilter + ";";
         if (modifier > 50) {
-            sql = "UPDATE `etlap` SET ar = ar + ? " + whereIfSingle + ";";
+            sql = "UPDATE `etlap` SET ar = ar + ? " + conditionIfSingle + ";";
         }
         PreparedStatement prpstm = this.conn.prepareCall(sql);
         prpstm.setInt(1, modifier);
-        if(etelID != null){
+        if (isID) {
             prpstm.setInt(2, etelID);
+            if (isFilter) {
+                prpstm.setInt(3, filter_kategoria.getId());
+            }
+        }
+        else if(isFilter) {
+            prpstm.setInt(2, filter_kategoria.getId());
         }
         return prpstm.executeUpdate() == 1;
     }

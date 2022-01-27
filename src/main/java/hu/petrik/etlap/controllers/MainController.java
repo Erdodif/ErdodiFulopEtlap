@@ -167,7 +167,11 @@ public class MainController extends Controller {
         if (selectedIndex != -1) {
             id = etelTable.getSelectionModel().getSelectedItem().getId();
         }
-        db.raisePrice(emelesSpinner.getValue(), id);
+        db.raisePrice(emelesSpinner.getValue(), id, filter);
         loadDB();
+    }
+
+    public void cancelSelect(ActionEvent actionEvent) {
+        etelTable.getSelectionModel().clearSelection();
     }
 }

@@ -14,14 +14,14 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EditController extends Controller{
+public class EditController extends Controller {
     public ChoiceBox<Kategoria> kategoriaChoiceBox;
     public Spinner<Integer> arSpinner;
     public TextField leirasTextField;
     public TextField nevTextField;
     private Etel modositando;
 
-    public void initialize(){
+    public void initialize() {
         List<Kategoria> kategoriak = Kategoria.getKategoriak();
         kategoriaChoiceBox.getItems().addAll(kategoriak);
     }

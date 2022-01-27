@@ -11,7 +11,7 @@ public class Kategoria {
     static private List<Kategoria> kategoriak;
     private int id;
     private String nev;
-    static public final Kategoria EMPTY_CATEGORY = new Kategoria(0,"Nincs szűrés");
+    static public final Kategoria EMPTY_CATEGORY = new Kategoria(0, "Nincs szűrés");
 
     public static void initialize(EtlapDB etlapDB) throws SQLException {
         Connection conn = etlapDB.conn;
@@ -19,7 +19,7 @@ public class Kategoria {
         Statement stmt = conn.createStatement();
         String sql = "SELECT * FROM kategoria;";
         ResultSet result = stmt.executeQuery(sql);
-        while (result.next()){
+        while (result.next()) {
             kategoriak.add(new Kategoria(
                     result.getInt("id"),
                     result.getString("nev")
@@ -27,7 +27,7 @@ public class Kategoria {
         }
     }
 
-    Kategoria(int id, String nev){
+    Kategoria(int id, String nev) {
         this.id = id;
         this.nev = nev;
     }
@@ -45,15 +45,15 @@ public class Kategoria {
         return this.getNev();
     }
 
-    static public Kategoria fromId(int id){
+    static public Kategoria fromId(int id) {
         return kategoriak.stream().filter(kategoria -> kategoria.id == id).findFirst().get();
     }
 
-    static public Kategoria fromNev(String nev){
+    static public Kategoria fromNev(String nev) {
         return kategoriak.stream().filter(kategoria -> kategoria.nev.equals(nev)).findFirst().get();
     }
 
-    static public List<Kategoria> getKategoriak(){
+    static public List<Kategoria> getKategoriak() {
         return Kategoria.kategoriak;
     }
 }

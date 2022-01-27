@@ -6,12 +6,11 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-
 <?import javafx.collections.FXCollections?>
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
-<?import hu.petrik.etlap.db.Kategoria?>
 <?import javafx.scene.control.Spinner?>
+
 <VBox minHeight="300.0" minWidth="500.0" prefHeight="314.0" prefWidth="544.0" spacing="20.0"
       xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="hu.petrik.etlap.controllers.MainController"
@@ -33,7 +32,8 @@
             </items>
         </ChoiceBox>
     </HBox>
-    <TableView fx:id="etelTable" maxHeight="1.7976931348623157E308" prefHeight="200.0" prefWidth="500.0" VBox.vgrow="ALWAYS">
+    <TableView fx:id="etelTable" maxHeight="1.7976931348623157E308" prefHeight="200.0" prefWidth="500.0"
+               VBox.vgrow="ALWAYS">
         <columns>
             <TableColumn fx:id="colNev" minWidth="50.0" prefWidth="200.0" text="Név"/>
             <TableColumn fx:id="colLeiras" minWidth="50.0" prefWidth="150.0" text="Leírás"/>
@@ -45,7 +45,7 @@
         <Label>
             Emelés
         </Label>
-        <Spinner fx:id="emelesSpinner" editable="true" >
+        <Spinner fx:id="emelesSpinner" editable="true">
             <valueFactory>
                 <javafx.scene.control.SpinnerValueFactory.IntegerSpinnerValueFactory amountToStepBy="1"
                                                                                      initialValue="5" max="3000"
@@ -56,5 +56,6 @@
             % -kal
         </Label>
         <Button mnemonicParsing="false" onAction="#onEmelesButtonClick" text="Emelés"/>
+        <Button mnemonicParsing="false" onAction="#cancelSelect" text="Kijelölés eltávolítása"/>
     </HBox>
 </VBox>

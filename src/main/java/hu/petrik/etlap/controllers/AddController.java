@@ -22,7 +22,7 @@ public class AddController extends Controller {
     @FXML
     public TextField leirasTextField;
 
-    public void initialize(){
+    public void initialize() {
         List<Kategoria> kategoriak = Kategoria.getKategoriak();
         kategoriaChoiceBox.getItems().addAll(kategoriak);
     }
@@ -50,7 +50,7 @@ public class AddController extends Controller {
                 return;
             }
             Kategoria kategoria = kategoriaChoiceBox.getValue();
-            boolean siker = db.addEtel(new Etel(0,nev, leiras, ar, kategoria.getId()));
+            boolean siker = db.addEtel(new Etel(0, nev, leiras, ar, kategoria.getId()));
             if (siker) {
                 smallAlert("Sikeres hozzáadás!");
                 return;
